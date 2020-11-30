@@ -1,0 +1,21 @@
+{
+  "development": {
+   "url": "postgres://jquadrkz:I_mBG6wd9olOn4bQQqxxC7H13WhGLNQC@hattie.db.elephantsql.com:5432/jquadrkz",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
+
