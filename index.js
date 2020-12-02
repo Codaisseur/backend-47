@@ -3,35 +3,22 @@ const app = express();
 const PORT = 4000;
 const cors = require("cors");
 
-const User = require("./models").user;
+const userRouter = require("./routers/users");
+const listRouter = require("./routers/lists");
+
+const { loggingMiddleware } = require("./middlewares");
 
 // Middlewares
 app.use(cors());
 app.use(express.json());
+app.use(loggingMiddleware); // setting middlewares at
+// APP LEVEL
+// Router level
+// Route level
+// app.use(failRandomly);
 
-app.get("/users", async (request, response, next) => {
-  try {
-    console.log("request recieved!!");
-    const users = await User.findAll();
-    response.json(users);
-  } catch (e) {
-    next(e);
-  }
-});
-
-app.get("/users/:id", async (req, res, next) => {
-  try {
-    const userId = req.params.id;
-    const user = await User.findByPk(userId);
-    if (!user) {
-      return res.status(404).send("User with that id not found");
-    }
-    res.json(user);
-  } catch (e) {
-    next(e);
-  }
-});
-
-// request => middleware1 (cors) || middleware2(body-parser) || route/endpoint || error-handler
+// Routers
+app.use("/users", userRouter);
+app.use("/lists", listRouter);
 
 app.listen(PORT, () => console.log("server running!"));
