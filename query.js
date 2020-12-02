@@ -1,4 +1,6 @@
 const User = require("./models").user;
+const TodoList = require("./models").todoList;
+const TodoItem = require("./models").todoItem;
 
 const userById = async id => {
   try {
@@ -8,9 +10,6 @@ const userById = async id => {
     console.log(e);
   }
 };
-
-// User.findAll() => [{}, {}] || []
-// User.findOne() => {} || null
 
 const findUserByEmail = async email => {
   try {
@@ -36,4 +35,26 @@ const findAllUsersWithSamePassword = async password => {
   }
 };
 
-findAllUsersWithSamePassword("123");
+const getUserAndListsAndItems = async id => {
+  try {
+    const user = await User.findByPk(id, {
+      include: [{ model: TodoList, include: [{ model: TodoItem }] }],
+    });
+    console.log(user.get({ plain: true }));
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+const listAndItems = async id => {
+  try {
+    const list = await TodoList.findByPk(id, {
+      include: [{ model: TodoItem }],
+    });
+    console.log(list.dataValues);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+
+getUserAndListsAndItems(1);
